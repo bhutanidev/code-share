@@ -12,12 +12,20 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.3",
+    "@codemirror/state": "^6.5.2",
+    "@types/codemirror": "^5.60.15",
+    "@workspace/common": "workspace:*",
     "@workspace/ui": "workspace:*",
+    "axios": "^1.8.4",
+    "codemirror": "^6.0.1",
     "lucide-react": "^0.475.0",
     "next": "^15.2.0",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "y-codemirror.next": "^0.3.5",
+    "yjs": "^13.6.24"
   },
   "devDependencies": {
     "@types/node": "^20",

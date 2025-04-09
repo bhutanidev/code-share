@@ -55,7 +55,11 @@ function checkUser(token:string):string|null{
   return decoded.id
 }
 wss.on('connection', function connection(ws:extendedWebSocket,request) {
-  ws.send("connected to wss")
+  ws.send(JSON.stringify({
+    success: true,
+    type: "connection",
+    message: "Connected to WebSocket server"
+  }))
   const url = request.url
   if(!url){
     return
@@ -84,15 +88,24 @@ wss.on('connection', function connection(ws:extendedWebSocket,request) {
 // migration done
     if(type == "create-room"){
       if(!roomId){
-        ws.send("No room id sent")
+        ws.send(JSON.stringify({
+          success: false,
+          type,
+          message: "No room id sent"
+        }));
+
         return
       }
       if(!ws.roomId){
         const roominfo = rooms.get(roomId)
         if(roominfo){
           console.log("room already exists with this id")
-          ws.send("room already exists with this id")
-          return
+          ws.send(JSON.stringify({
+            success: false,
+            type,
+            message: "Room already exists"
+          }));
+          return;
         }
         const doc = new Y.Doc()
         const sockets = new Set<extendedWebSocket>()
@@ -101,35 +114,64 @@ wss.on('connection', function connection(ws:extendedWebSocket,request) {
         rooms.set(roomId,{doc,sockets})
         ws.roomId=roomId
         console.log("creaed room with id: ",roomId);
-        ws.send("created room")
+        ws.send(JSON.stringify({
+          success: true,
+          type,
+          message: `Room ${roomId} created`
+        }));
       }else{
         console.log("already in a room with room id: ",roomId)
-        ws.send("Already in a room . Leave the room to enter a new one.")
+        ws.send(JSON.stringify({
+          success: false,
+          type,
+          message: "Already in a room. Leave the current room first."
+        }));
       }
     }
 //migration done
     if(type=="join-room"){
-      if(!roomId){
-        ws.send("No room id sent")
-        return
+      if (!roomId) {
+        ws.send(JSON.stringify({
+          success: false,
+          type,
+          message: "No room id sent"
+        }));
+        return;
       }
       if(!ws.roomId){
         if(rooms.has(roomId)){
           ws.roomId = roomId
           const roominfo = rooms.get(roomId)
-          if(!roominfo)return
+          if(!roominfo){
+            ws.send(JSON.stringify({
+              success: false,
+              type,
+              message: "Room does not exist"
+            }));
+            return;
+          }
           roominfo?.sockets.add(ws)
           rooms.set(roomId,{...roominfo})
           const state = Y.encodeStateAsUpdate(roominfo.doc)
           ws.send(JSON.stringify({
+            success: true,
             type: "initial-sync",
+            message: "Synced room state",
             update: Array.from(state)
-          }))
+          }));
         }else{
-          ws.send("Room does not exist");
+          ws.send(JSON.stringify({
+            success: false,
+            type,
+            message: "Already in a room. Leave current room first."
+          }));
         }
       }else{
-        ws.send("Already in a room . Leave the room to enter a new one.")
+        ws.send(JSON.stringify({
+          success: false,
+          type,
+          message: "Already in a room. Leave current room first."
+        }));
       }
       console.log(rooms)
       
@@ -145,7 +187,11 @@ wss.on('connection', function connection(ws:extendedWebSocket,request) {
         if(roominfo.sockets.size>0)rooms.set(room,{...roominfo})
         else rooms.delete(room)
         console.log("left room with id: ", room);
-        ws.send("room left")
+        ws.send(JSON.stringify({
+          success: true,
+          type,
+          message: `Left room ${room}`
+        }));
       }
     }
     //to be updated
@@ -159,8 +205,29 @@ wss.on('connection', function connection(ws:extendedWebSocket,request) {
         const roominfo = rooms.get(ws.roomId)
         if(!roominfo){
           console.log("Room does not exist")
-          ws.send("Room does not exist")
-          return
+          ws.send(JSON.stringify({
+            success: false,
+            type,
+            message: "No code provided"
+          }));
+          return;
+        }
+
+        if (!ws.roomId) {
+          ws.send(JSON.stringify({
+            success: false,
+            type,
+            message: "Not connected to any room"
+          }));
+          return;
+        }
+        if (!roominfo) {
+          ws.send(JSON.stringify({
+            success: false,
+            type,
+            message: "Room not found"
+          }));
+          return;
         }
         try {
           const update = Uint8Array.from(JSON.parse(changeCode))
@@ -168,20 +235,23 @@ wss.on('connection', function connection(ws:extendedWebSocket,request) {
           roominfo.sockets.forEach((client)=>{
             if(client!==ws && client.readyState===WebSocket.OPEN){
               client.send(JSON.stringify({
-                type:"code-update",
-                update:Array.from(update)
-              }))
+                success: true,
+                type: "code-update",
+                message: "Code updated",
+                update: Array.from(update)
+              }));
             }
           })
+          ws.send(JSON.stringify({
+            success: true,
+            type,
+            message: "Code applied successfully"
+          }));  
         } catch (error) {
           console.log(error)
           ws.send("invalid input ")
           return
         }
-        ws.send("code changed")
-      }else{
-        console.log("not connected to any room");
-        ws.send("Not connected to any room")
       }
     }
   });

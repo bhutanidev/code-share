@@ -14,29 +14,34 @@ export const signupController=asyncHandler(async(req,res,next)=>{
         next(new ApiError(400,psdata.error.message))
         return
     }
-    const found = await prismaClient.user.findFirst({
-        where:{
-            email:email
+    // const found = await prismaClient.user.findFirst({
+    //     where:{
+    //         email:email
+    //     }
+    // })
+    // console.log(found)
+    // if(found){
+    //     next(new ApiError(400,"Email already exists"))
+    //     return;
+    // }
+    try {
+        const hashedpw = await hashPassword(password)
+        const newentry = await prismaClient.user.create({
+            data:{
+                email:psdata.data?.email,
+                password:hashedpw as string,
+                name:psdata.data?.name
+            }
+        })
+        if(!newentry){
+            next(new ApiError(500,"Database error"))
+            return
         }
-    })
-    
-    if(found){
+        res.status(200).json(new apiResponse(200,{email:newentry.email,name:newentry.name},"User created succsessfully"))
+    } catch (error) {
         next(new ApiError(400,"Email already exists"))
         return;
     }
-    const hashedpw = await hashPassword(password)
-    const newentry = await prismaClient.user.create({
-        data:{
-            email:psdata.data?.email,
-            password:hashedpw as string,
-            name:psdata.data?.name
-        }
-    })
-    if(!newentry){
-        next(new ApiError(500,"Database error"))
-        return
-    }
-    res.status(200).json(new apiResponse(200,{email:newentry.email,name:newentry.name},"User created succsessfully"))
 })
 
 export const signinController=asyncHandler(async(req,res,next)=>{
