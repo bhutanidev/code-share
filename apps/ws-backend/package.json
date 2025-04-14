@@ -14,6 +14,7 @@
     "@types/ws": "^8.18.0",
     "@workspace/backend-common": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
+    "dotenv": "^16.5.0",
     "jsonwebtoken": "^9.0.2",
     "ws": "^8.18.1",
     "yjs": "^13.6.24"

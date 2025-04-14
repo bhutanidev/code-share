@@ -1,4 +1,4 @@
-export const JWT_SECRET = process.env.JWT_SECRET as string
+export const JWT_SECRET = process.env.JWT_SECRET || "bidbfgvdsfvgiuesbd4598y7t84beghwruiy"
 //steps to intialise common
 // npm init
 // creates package .json

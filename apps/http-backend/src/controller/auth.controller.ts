@@ -5,7 +5,8 @@ import { CreateUserSchema , SigninUserSchema , CreateRoomSchema} from "@workspac
 import {prismaClient} from "@workspace/db/client"
 import jwt from "jsonwebtoken"
 import { comparePassword,hashPassword } from "../utils/Encryption";
-import { JWT_SECRET } from "@workspace/backend-common/config";
+const JWT_SECRET = process.env.JWT_SECRET as string
+
 
 export const signupController=asyncHandler(async(req,res,next)=>{
     const {password, email , name}=req.body
@@ -66,6 +67,7 @@ export const signinController=asyncHandler(async(req,res,next)=>{
         next(new ApiError(400,"Incorrect Password"))
         return
     }
+    console.log(JWT_SECRET)
     const token = jwt.sign({id:found.id,email:found.email,name:found.name},JWT_SECRET)
     res.cookie("token",token).status(200).json(new apiResponse(200,{email},"User logged in"))
 })

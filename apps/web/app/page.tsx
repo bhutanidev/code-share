@@ -12,7 +12,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <Code className="h-6 w-6 mr-2 text-primary" />
-            <span className="font-bold text-lg">CodeCollab</span>
+            <span className="font-bold text-lg">CodeShare</span>
           </div>
           <ModeToggle /> {/* Client component used within server component */}
         </div>
@@ -25,7 +25,7 @@ const LandingPage = () => {
           <div className="flex flex-col items-center text-center mb-16">
             <div className="flex items-center mb-6 animate-pulse">
               <Code className="h-10 w-10 mr-2 text-primary" />
-              <h1 className="text-4xl md:text-6xl font-bold">CodeCollab</h1>
+              <h1 className="text-4xl md:text-6xl font-bold">CodeShare</h1>
             </div>
             <h2 className="text-xl md:text-2xl mb-6 text-muted-foreground max-w-2xl">
               Real-time collaborative code editing for seamless team development
@@ -195,7 +195,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to code collaboratively?</h2>
           <p className="text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of developers who are building better software together with CodeCollab.
+            Join thousands of developers who are building better software together with CodeShare.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary">
@@ -214,10 +214,10 @@ const LandingPage = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-4 md:mb-0">
               <Code className="h-6 w-6 mr-2 text-primary" />
-              <span className="font-bold text-lg">CodeCollab</span>
+              <span className="font-bold text-lg">CodeShare</span>
             </div>
             <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} CodeCollab. All rights reserved.
+              © {new Date().getFullYear()} CodeShare. All rights reserved.
             </div>
           </div>
         </div>

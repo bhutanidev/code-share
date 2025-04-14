@@ -1,7 +1,9 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import WebSocket, { WebSocketServer } from 'ws';
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from '@workspace/backend-common/config';
 import * as Y from 'yjs';
+const JWT_SECRET = process.env.JWT_SECRET as string
 
 type messageData = {
   type: string,
@@ -45,6 +47,11 @@ wss.on('connection', function connection(ws: WebSocket, request) {
 
   const userId = checkUser(token);
   if (!userId) {
+    ws.send(JSON.stringify({
+      success: false,
+      type: "connection",
+      message: "Not authenticated"
+    }))
     ws.close();
     return;
   }

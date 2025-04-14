@@ -7,6 +7,7 @@ import { yCollab } from 'y-codemirror.next'
 import * as Y from 'yjs'
 import { EditorState } from '@codemirror/state'
 import { getCookie } from '@/lib/extract-cookie'
+import { useRouter } from 'next/navigation'
 
 const customStyles = EditorView.theme({
   ".cm-line": {
@@ -42,11 +43,16 @@ export default function CodeEditor({ roomId }: { roomId: number }) {
   const editorRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<EditorView | null>(null)
   const ydoc = useRef(new Y.Doc()).current
-
+  const wsRef = useRef<WebSocket|null>(null)
+  const router = useRouter()
   useEffect(() => {
+    if(!token){
+      router.push('/safety')
+    }
     const raf = requestAnimationFrame(() => {
       console.log("roomId:", roomId)
       const ws = new WebSocket(`ws://localhost:3002?token=${token}`)
+      wsRef.current = ws
   
       console.log("WebSocket created:", ws)
   
@@ -91,7 +97,10 @@ export default function CodeEditor({ roomId }: { roomId: number }) {
         try {
           const data = JSON.parse(event.data)
           console.log("Received message:", data)
-  
+          if(!data?.success && data?.type === "connection") {
+            router.push('/safety');
+            return;
+          }
           if (!data?.success && data?.type === "create-room") {
             const joinRoomMessage = {
               type: "join-room",
@@ -136,8 +145,10 @@ export default function CodeEditor({ roomId }: { roomId: number }) {
     })
   
     return () => {
+      wsRef.current?.close()
       viewRef.current?.destroy()
       raf && cancelAnimationFrame(raf)
+    
     }
   }, [roomId])
   

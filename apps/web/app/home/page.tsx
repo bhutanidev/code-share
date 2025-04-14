@@ -39,7 +39,7 @@ const HomePage =  ()=>{
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Code className="h-6 w-6 text-primary" />
-            <h1 className="text-xl font-bold">CodeCollab</h1>
+            <h1 className="text-xl font-bold">CodeShare</h1>
           </div>
           <div className="flex items-center gap-4">
             <ModeToggle />
@@ -54,7 +54,7 @@ const HomePage =  ()=>{
           <div className="space-y-2">
             <h2 className="text-4xl font-bold">Code together in real-time</h2>
             <p className="text-xl text-muted-foreground">
-              Connect, collaborate, and code from anywhere with CodeCollab
+              Connect, collaborate, and code from anywhere with CodeShare
             </p>
           </div>
 
@@ -164,10 +164,10 @@ const HomePage =  ()=>{
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <Code className="h-5 w-5 text-primary" />
-              <span className="font-medium">CodeCollab</span>
+              <span className="font-medium">CodeShare</span>
             </div>
             <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} CodeCollab. All rights reserved.
+              © {new Date().getFullYear()} CodeShare. All rights reserved.
             </div>
           </div>
         </div>

@@ -11,6 +11,7 @@ import { getCookie } from "@/lib/extract-cookie"
 import React from "react"
 import { useRouter } from "next/navigation"
 
+
 export default function RoomLayout({ params }: { params: Promise<{ roomID: string }> }) {
   const router = useRouter()
   let { roomID } = React.use(params)

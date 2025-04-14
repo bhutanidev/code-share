@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "exports": {
-    "./config":{
+    "./config": {
       "types": "./src/index.ts",
-      "default":"./dist/index.js"
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
