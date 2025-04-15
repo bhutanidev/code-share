@@ -10,15 +10,32 @@ import CodeEditor from "@/components/codeEditor"
 import { getCookie } from "@/lib/extract-cookie"
 import React from "react"
 import { useRouter } from "next/navigation"
+import { httpAxios } from "@/lib/axios-config"
+import { toast } from "sonner"
 
 
 export default function RoomLayout({ params }: { params: Promise<{ roomID: string }> }) {
   const router = useRouter()
   let { roomID } = React.use(params)
   const roomId = parseInt(roomID)
-
-  const handleLeave = () => {
-    router.push('/home')
+  console.log("inside room/",roomID);
+  
+  const handleLeave = async()=>{
+    console.log("called handle leave");
+    
+    const token = getCookie("token")
+    try {
+      const response = await httpAxios.post('/api/leaveroom',{roomId})
+      toast("Room left!!!")
+      router.push('/home')
+    } catch (error:any) {
+      const errorMessage = error?.response?.data?.message;
+      if (errorMessage) {
+        alert(errorMessage);
+      } else {
+        console.error("Unexpected error:", error);
+      }
+    }
   }
 
   return (
@@ -46,7 +63,7 @@ export default function RoomLayout({ params }: { params: Promise<{ roomID: strin
           </Card>
 
           <div className="flex flex-col gap-2">
-            <Button variant="destructive" className="w-full rounded-2xl" onClick={handleLeave}>
+            <Button variant="destructive" className=" hover:cursor-pointer w-full rounded-2xl" onClick={handleLeave}>
               Leave
             </Button>
           </div>

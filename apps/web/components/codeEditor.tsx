@@ -59,9 +59,9 @@ export default function CodeEditor({ roomId }: { roomId: number }) {
       const ytext = ydoc.getText('codemirror')
       const binding = yCollab(ytext, null)
   
-      console.log(editorRef.current)
-      console.log(viewRef.current)
-      console.log(ws)
+      // console.log(editorRef.current)
+      // console.log(viewRef.current)
+      // console.log(ws)
   
       if (!editorRef.current || viewRef.current || !ws) {
         console.log("could not find something")

@@ -16,16 +16,6 @@ export const signupController=asyncHandler(async(req,res,next)=>{
         next(new ApiError(400,psdata.error.message))
         return
     }
-    // const found = await prismaClient.user.findFirst({
-    //     where:{
-    //         email:email
-    //     }
-    // })
-    // console.log(found)
-    // if(found){
-    //     next(new ApiError(400,"Email already exists"))
-    //     return;
-    // }
     try {
         const hashedpw = await hashPassword(password)
         const newentry = await prismaClient.user.create({
@@ -71,7 +61,24 @@ export const signinController=asyncHandler(async(req,res,next)=>{
     const token = jwt.sign({id:found.id,email:found.email,name:found.name},JWT_SECRET)
     res.cookie("token",token).status(200).json(new apiResponse(200,{email},"User logged in"))
 })
-
+export const logoutController = asyncHandler(async(req,res,next)=>{
+    const userId = req.userId
+    if(!userId){
+        next(new ApiError(401,"Not authenticated"))
+        return
+    }
+    try {
+        const newentry = await prismaClient.userOnRoom.deleteMany({
+            where:{
+                userId:userId
+            }
+        })
+    } catch (error) {
+        console.log(error);
+    } finally{
+        res.status(200).clearCookie("token").json(new apiResponse(200,{},"User logged out successfully!!!"))
+    }
+})
 export const createRoomController=asyncHandler(async(req,res,next)=>{
     const psdata = CreateRoomSchema.safeParse(req.body)
     if(!psdata.success){
@@ -147,7 +154,7 @@ export const joinRoomController = asyncHandler(async(req,res,next)=>{
             }
         })
         console.log(newentry);
-        res.json(new apiResponse(200,{roomId:newentry.roomId},"joined room successfully"))
+        res.json(new apiResponse(200,{slug,roomId:newentry.roomId},"joined room successfully"))
     } catch (error) {
         console.log("Not able to join the room")
         next(new ApiError(500,"Not able to join a room"))
@@ -205,5 +212,6 @@ module.exports={
     signinController,
     createRoomController,
     leaveRoomController,
-    joinRoomController
+    joinRoomController,
+    logoutController
 }
