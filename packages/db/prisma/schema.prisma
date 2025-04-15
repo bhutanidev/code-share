@@ -11,7 +11,8 @@ model User{
   email     String    @unique
   name      String
   password  String
-  rooms     Room[]
+  rooms     UserOnRoom[]
+  AdminOf   Room[]   @relation("roomAdmin")
 }
 
 model Room{
@@ -19,5 +20,14 @@ model Room{
   slug      String     @unique
   createdAt DateTime   @default(now())
   adminId   String
-  admin     User       @relation(fields: [adminId] , references: [id])
+  admin     User       @relation("roomAdmin",fields: [adminId] , references: [id])
+  users     UserOnRoom[]     
+}
+
+model UserOnRoom{
+  roomId   Int
+  room     Room       @relation(fields:[roomId] , references:[id])
+  userId   String
+  user     User       @relation(fields:[userId],references:[id])
+  @@id([roomId, userId])
 }

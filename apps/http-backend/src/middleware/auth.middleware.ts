@@ -7,9 +7,7 @@ import { JWT_SECRET } from "@workspace/backend-common/config"
 export const attachUser = async(req:Request,res:Response,next: NextFunction)=>{
 
     try {
-        console.log(req.cookies)
         const token = req.cookies?.token
-        console.log(token)
         if(!token){
             next(new ApiError(403,"No token found"))
             return

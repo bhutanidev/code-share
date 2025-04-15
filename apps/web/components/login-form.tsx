@@ -15,6 +15,7 @@ import { SigninUserSchema } from "@workspace/common/zodschema"
 import { httpAxios } from "@/lib/axios-config"
 import { useRouter } from "next/navigation"
 import { AxiosError, AxiosResponse } from "axios"
+import { toast } from "sonner"
 
 export function LoginForm({
   className,
@@ -34,7 +35,7 @@ export function LoginForm({
 
     if(zodData.error){
       const errors = JSON.parse(zodData.error.message)
-      alert(errors[0].message)
+      toast(errors[0].message)
       return
     }
 

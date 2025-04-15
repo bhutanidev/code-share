@@ -14,6 +14,7 @@ import { FormEvent, useRef } from "react"
 import { CreateUserSchema } from "@workspace/common/zodschema"
 import { httpAxios } from "@/lib/axios-config"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export function SignupForm({
   className,
@@ -34,7 +35,7 @@ export function SignupForm({
 
         if(zodData.error){
             const errors = JSON.parse(zodData.error.message)
-            alert(errors[0].message)
+            toast(errors[0].message)
             return
         }
 
@@ -44,7 +45,7 @@ export function SignupForm({
         } catch (error: any) {
           const errorMessage = error?.response?.data?.message;
           if (errorMessage) {
-            alert(errorMessage);
+            toast(errorMessage);
           } else {
             console.error("Unexpected error:", error);
           }
