@@ -192,7 +192,7 @@ export const leaveRoomController = asyncHandler(async(req,res,next)=>{
             message: "User has left the room successfully",
         });
     } catch (error) {
-        console.log("error in leaving room",error);
+        console.log("error in leaveroomcontroller",error);
         next(new ApiError(500,"User not in Room"))
         return
     }
