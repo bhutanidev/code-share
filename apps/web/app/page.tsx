@@ -3,6 +3,7 @@ import { Camera, Code, Users, Lock, Home, GitBranch, Zap, Brain } from 'lucide-r
 import { Button } from '@workspace/ui/components/button';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { ModeToggle } from '@/components/mode-toggle';
+import LoginButton from '@/components/login-button';
 
 const LandingPage = () => {
   return (
@@ -31,12 +32,8 @@ const LandingPage = () => {
               Real-time collaborative code editing for seamless team development
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
-                Get Started
-              </Button>
-              <Button size="lg" variant="outline">
-                Live Demo
-              </Button>
+              <LoginButton text = "Login"/>
+              <LoginButton text="Signup" variant="outline"/>
             </div>
           </div>
 

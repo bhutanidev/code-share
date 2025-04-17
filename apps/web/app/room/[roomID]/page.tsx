@@ -8,10 +8,12 @@ import {
 import { Button } from "@workspace/ui/components/button"
 import CodeEditor from "@/components/codeEditor"
 import { getCookie } from "@/lib/extract-cookie"
-import React from "react"
+import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { httpAxios } from "@/lib/axios-config"
 import { toast } from "sonner"
+import useUserStore from "@/store/store"
+import SafetyPage from "@/app/safety/page"
 
 
 export default function RoomLayout({ params }: { params: Promise<{ roomID: string }> }) {
@@ -19,7 +21,7 @@ export default function RoomLayout({ params }: { params: Promise<{ roomID: strin
   let { roomID } = React.use(params)
   const roomId = parseInt(roomID)
   console.log("inside room/",roomID);
-  
+  const {isAuthenticated} = useUserStore((state) => state)
   const handleLeave = async()=>{
     console.log("called handle leave");
     
@@ -39,7 +41,7 @@ export default function RoomLayout({ params }: { params: Promise<{ roomID: strin
   }
 
   return (
-    <div className="h-screen w-screen p-4 bg-background text-foreground">
+    isAuthenticated ? <div className="h-screen w-screen p-4 bg-background text-foreground">
       <div className="h-full w-full border-none rounded-2xl flex p-3 gap-3">
         <Card className="flex-1 flex flex-col rounded-2xl h-full pt-0">
           <CardContent className="flex-1 bg-muted rounded-t-2xl">
@@ -69,6 +71,6 @@ export default function RoomLayout({ params }: { params: Promise<{ roomID: strin
           </div>
         </div>
       </div>
-    </div>
+    </div>:<SafetyPage/>
   )
 }

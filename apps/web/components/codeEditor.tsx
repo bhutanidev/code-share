@@ -38,7 +38,7 @@ const lineNumberStyles = EditorView.theme({
   },
 })
 
-export default function CodeEditor({ roomId }: { roomId: number }) {
+export default function CodeEditor({ roomId }: { roomId:Number }) {
   const token = getCookie("token")
   const editorRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<EditorView | null>(null)

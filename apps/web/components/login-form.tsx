@@ -16,6 +16,7 @@ import { httpAxios } from "@/lib/axios-config"
 import { useRouter } from "next/navigation"
 import { AxiosError, AxiosResponse } from "axios"
 import { toast } from "sonner"
+import useUserStore from "@/store/store"
 
 export function LoginForm({
   className,
@@ -24,13 +25,13 @@ export function LoginForm({
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
+  const {setEmail , setName , setId , setAuthentication} = useUserStore((state) => state)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const email = emailRef.current?.value
     const password = passwordRef.current?.value
-
     const zodData = SigninUserSchema.safeParse({name,email,password})
 
     if(zodData.error){
@@ -41,6 +42,10 @@ export function LoginForm({
 
     try {
       const response = await httpAxios.post("/api/signin",{email,password})
+      if(response.data?.data.email){setEmail(response.data?.data.email)}
+      if(response.data?.data.id)setId(response.data?.data.id)
+      if(response.data?.data.name)setName(response.data?.data.name)
+      setAuthentication(true)
       router.push('/home')
     } catch (error: any) {
       const errorMessage = error?.response?.data?.message;
