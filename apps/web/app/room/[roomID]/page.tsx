@@ -8,7 +8,7 @@ import {
 import { Button } from "@workspace/ui/components/button"
 import CodeEditor from "@/components/codeEditor"
 import { getCookie } from "@/lib/extract-cookie"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { httpAxios } from "@/lib/axios-config"
 import { toast } from "sonner"
@@ -22,6 +22,12 @@ export default function RoomLayout({ params }: { params: Promise<{ roomID: strin
   const roomId = parseInt(roomID)
   console.log("inside room/",roomID);
   const {isAuthenticated} = useUserStore((state) => state)
+  const [connectedUsers, setConnectedUsers] = useState<Array<{
+      clientId: number,
+      name: string,
+      color: string,
+      id: string
+    }>>([])
   const handleLeave = async()=>{
     console.log("called handle leave");
     
@@ -45,10 +51,29 @@ export default function RoomLayout({ params }: { params: Promise<{ roomID: strin
       <div className="h-full w-full border-none rounded-2xl flex p-3 gap-3">
         <Card className="flex-1 flex flex-col rounded-2xl h-full pt-0">
           <CardContent className="flex-1 bg-muted rounded-t-2xl">
-            <CodeEditor roomId={roomId} />
+            <CodeEditor roomId={roomId} setConnectedUsers={setConnectedUsers} />
           </CardContent>
           <div className="border-t p-3 text-center text-sm font-medium text-muted-foreground">
-            inside room
+            <div className="mb-4 p-2 rounded-lg">
+              <h3 className="text-sm font-medium text-gray-300 mb-2">
+                Connected Users ({connectedUsers.length})
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {connectedUsers.map((user) => (
+                  <div
+                    key={user.clientId}
+                    className="flex items-center gap-2 px-3 py-1 rounded-full text-sm"
+                    style={{ backgroundColor: user.color + '20', borderColor: user.color }}
+                  >
+                    <div
+                      className="w-2 h-2 rounded-full"
+                      style={{ backgroundColor: user.color }}
+                    />
+                    <span className="text-white">{user.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </Card>
 

@@ -17,6 +17,7 @@
     "dotenv": "^16.5.0",
     "jsonwebtoken": "^9.0.2",
     "ws": "^8.18.1",
+    "y-protocols": "^1.0.6",
     "yjs": "^13.6.24"
   },
   "keywords": [],
