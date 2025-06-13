@@ -7,20 +7,20 @@
 ## 🖼️ Preview Screenshots
 
 ### 🧭 Landing Page – Dark Mode
-![Landing Page Dark](/landingpage-dark.jpg)
+![Landing Page Dark](apps/web/public/landingpage-dark.jpg)
 
 ### 🧑‍💻 Join a Room Instantly
-![Join Room](/joinroom.jpg)
+![Join Room](apps/web/public/joinroom.jpg)
 
 ### 📚 Awareness Indicators
 *See who’s editing and where in real-time.*
-![Awareness](/awareness.jpg)
+![Awareness](apps/web/public/awareness.jpg)
 
 ### 🤖 Room + AI Chatbot Integration
-![Room and Bot](/roomandbot.jpg)
+![Room and Bot](apps/web/public/roomandbot.jpg)
 
 ### ☀️ Landing Page – Light Mode
-![Landing Page Light](/landingpage-light.jpg)
+![Landing Page Light](apps/web/public/landingpage-light.jpg)
 
 ---
 
