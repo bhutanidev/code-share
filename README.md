@@ -1,31 +1,111 @@
-# shadcn/ui monorepo template
+# CodeShare
 
-This template is for creating a monorepo with shadcn/ui.
+> Real-time collaborative code editing made simple and powerful.
 
-## Usage
+---
+
+## 🖼️ Preview Screenshots
+
+### 🧭 Landing Page – Dark Mode
+![Landing Page Dark](/landingpage-dark.jpg)
+
+### 🧑‍💻 Join a Room Instantly
+![Join Room](/joinroom.jpg)
+
+### 📚 Awareness Indicators
+*See who’s editing and where in real-time.*
+![Awareness](/awareness.jpg)
+
+### 🤖 Room + AI Chatbot Integration
+![Room and Bot](/roomandbot.jpg)
+
+### ☀️ Landing Page – Light Mode
+![Landing Page Light](/landingpage-light.jpg)
+
+---
+
+## 🚀 Overview
+
+**CodeShare** is a real-time collaborative code editor powered by **Yjs**, **CodeMirror 6**, and **WebSockets**. It lets developers write and share code together in live rooms with full sync and presence awareness.
+
+Great for:
+- Pair programming
+- Live interviews
+- Teaching and debugging sessions
+- Team collaboration
+
+---
+
+## ✨ Features
+
+- 🔄 Real-time collaborative editing
+- 🎨 Syntax highlighting (JavaScript supported; more coming soon)
+- 👥 Awareness indicators: cursor positions and user presence
+- 🗃 Room-based collaboration
+- 🤖 AI Bot integration (optional)
+- 💾 Auto-save & restore sessions
+
+---
+
+## 📁 Monorepo Structure (Turborepo)
+apps/
+├── frontend # Next.js app with CodeMirror + Yjs integration
+├── websocket # WebSocket server (room-based real-time sync)
+└── backend # Optional REST API (room metadata, bot hooks)
+
+packages/
+└── ui # Shared UI components (shadcn/ui, Tailwind)
+
+
+---
+
+## 🧑‍💻 Tech Stack
+
+- **Frontend**: React, Next.js, CodeMirror 6, TailwindCSS
+- **Backend**: Node.js, Express, WebSocket
+- **Collab Engine**: Yjs, y-codemirror.next
+- **Monorepo**: Turborepo (pnpm workspaces)
+- **Deployment**: Vercel (frontend) + Render/ECS (backend)
+
+---
+
+
+## 🛠️ Setup
+
+### 1. Clone the repository
 
 ```bash
-pnpm dlx shadcn@latest init
+git clone https://github.com/yourusername/codeshare
+cd codeshare
 ```
+---
 
-## Adding components
+## 🧑‍💻 Tech Stack
 
-To add components to your app, run the following command at the root of your `web` app:
+- **Frontend**: React, Next.js, CodeMirror 6, TailwindCSS
+- **Backend**: Node.js, Express, WebSocket
+- **Collab Engine**: Yjs, y-codemirror.next
+- **Monorepo**: Turborepo (pnpm workspaces)
+- **Deployment**: Vercel (frontend) + Render/ECS (backend)
+
+---
+
+## 🛠️ Setup
+
+### 1. Clone the repository
 
 ```bash
-pnpm dlx shadcn@latest add button -c apps/web
+git clone https://github.com/yourusername/codeshare
+cd codeshare
 ```
-
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button"
+2. Install dependencies
+```bash
+pnpm install
 ```
+3. Start the development server
+```bash
+pnpm run build
+pnpm dev
+```
+This will launch both frontend and backend services (if using a Turborepo dev script).
+
