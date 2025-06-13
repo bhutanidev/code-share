@@ -14,6 +14,7 @@ import { httpAxios } from "@/lib/axios-config"
 import { toast } from "sonner"
 import useUserStore from "@/store/store"
 import SafetyPage from "@/app/safety/page"
+import Bot from "@/components/bot"
 
 
 export default function RoomLayout({ params }: { params: Promise<{ roomID: string }> }) {
@@ -77,18 +78,13 @@ export default function RoomLayout({ params }: { params: Promise<{ roomID: strin
           </div>
         </Card>
 
-        <div className="w-1/3 flex flex-col gap-3">
-          <Card className="flex-1 rounded-2xl">
-            <CardHeader>
-              <CardTitle className="text-base text-muted-foreground">
-                output or bot
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+        <div className="w-1/3 flex flex-col gap-3 h-full  ">
+          <Card className="flex-1 rounded-2xl p-0 h-5/6">
+            <CardContent className="  h-full p-0 ">
               {/* Add content/output here */}
+              <Bot/>
             </CardContent>
           </Card>
-
           <div className="flex flex-col gap-2">
             <Button variant="destructive" className=" hover:cursor-pointer w-full rounded-2xl" onClick={handleLeave}>
               Leave

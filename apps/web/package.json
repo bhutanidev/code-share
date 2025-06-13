@@ -12,8 +12,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@codemirror/lang-javascript": "^6.2.3",
-    "@codemirror/state": "^6.5.2",
+    "@codemirror/autocomplete": "^6.8.0",
+    "@codemirror/highlight": "^0.19.8",
+    "@codemirror/lang-javascript": "^6.1.4",
+    "@codemirror/language": "^6.10.1",
+    "@codemirror/state": "^6.2.1",
+    "@codemirror/view": "^6.13.0",
     "@types/codemirror": "^5.60.15",
     "@workspace/common": "workspace:*",
     "@workspace/ui": "workspace:*",
@@ -24,6 +28,7 @@
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
     "sonner": "^2.0.3",
     "y-codemirror.next": "^0.3.5",
     "y-protocols": "^1.0.6",

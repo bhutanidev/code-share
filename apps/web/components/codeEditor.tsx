@@ -10,6 +10,7 @@ import { getCookie } from '@/lib/extract-cookie'
 import { useRouter } from 'next/navigation'
 import { Awareness, encodeAwarenessUpdate, applyAwarenessUpdate } from 'y-protocols/awareness'
 import useUserStore from '@/store/store'
+import useYDocStore from '@/store/ydocstore'
 
 const getUserColor = (userId: string) => {
   const colors = ['#ff6b6b', '#6bc2ff', '#81c784', '#ffd54f', '#ba68c8', '#f06292']
@@ -17,7 +18,6 @@ const getUserColor = (userId: string) => {
   for (let i = 0; i < userId.length; i++) hash += userId.charCodeAt(i)
   return colors[hash % colors.length]
 }
-
 const customStyles = EditorView.theme({
   ".cm-line": {
     padding: "0 0.5rem",
@@ -30,6 +30,63 @@ const customStyles = EditorView.theme({
   },
   ".cm-selectionBackground": {
     backgroundColor: "#4B5563",
+  },
+  ".cm-content": {
+    color: "#E5E7EB", 
+  },
+  ".cm-keyword": {
+    color: "#C084FC", 
+    fontWeight: "500",
+  },
+  ".cm-string": {
+    color: "#34D399", 
+  },
+  ".cm-number": {
+    color: "#FBBF24", 
+  },
+  ".cm-comment": {
+    color: "#6B7280", 
+    fontStyle: "italic",
+  },
+  ".cm-operator": {
+    color: "#F472B6", 
+  },
+  ".cm-punctuation": {
+    color: "#E5E7EB", // Light gray for punctuation
+  },
+  ".cm-bracket": {
+    color: "#60A5FA", 
+  },
+  ".cm-variableName": {
+    color: "#FDE047", 
+  },
+  ".cm-property": {
+    color: "#A78BFA", 
+  },
+  ".cm-function": {
+    color: "#38BDF8", 
+  },
+  ".cm-type": {
+    color: "#FB7185", 
+  },
+  ".cm-definition": {
+    color: "#FDE047", 
+  },
+  ".cm-atom": {
+    color: "#FBBF24", 
+  },
+  ".cm-meta": {
+    color: "#9CA3AF", 
+  },
+  ".cm-tag": {
+    color: "#F472B6", 
+  },
+  ".cm-attribute": {
+    color: "#34D399", 
+  },
+  ".cm-link": {
+    color: "#60A5FA", 
+    textDecoration: "underline",
   },
   // Awareness cursor styles
   ".cm-ySelectionInfo": {
@@ -82,6 +139,10 @@ const lineNumberStyles = EditorView.theme({
     paddingRight: "0.5rem",
     fontSize: "0.75rem",
     fontFamily: "monospace",
+    color: "#6B7280", 
+  },
+  ".cm-activeLineGutter": {
+    color: "#E5E7EB", 
   },
 })
 
@@ -108,6 +169,7 @@ export default function CodeEditor({ roomId , setConnectedUsers }: { roomId: Num
   const awarenessRef = useRef<Awareness | null>(null)
   const router = useRouter()
   const {name} = useUserStore()
+  // const setCode = useYDocStore((state) => state.setCode)
   // State to track connected users
 
   // Function to get all connected users
@@ -154,6 +216,8 @@ export default function CodeEditor({ roomId , setConnectedUsers }: { roomId: Num
       console.log("WebSocket created:", ws)
 
       const ytext = ydoc.getText('codemirror')
+      useYDocStore.getState().setYText(ytext)
+
       const awareness = new Awareness(ydoc)
       awarenessRef.current = awareness
 
@@ -161,6 +225,7 @@ export default function CodeEditor({ roomId , setConnectedUsers }: { roomId: Num
       const userId = Math.floor(Math.random() * 100000).toString()
       const userColor = getUserColor(userId)
       const userName = `${name}-${generateUserName()}`
+      // ytext.observe(()=>setCode(ytext.toString()))
 
       // Set local user info for awareness
       awareness.setLocalStateField('user', {
@@ -303,8 +368,7 @@ export default function CodeEditor({ roomId , setConnectedUsers }: { roomId: Num
   }, [roomId, token, router])
 
   return (
-    <div className="max-h-full h-full w-full">
-      {/* Display connected users */}
+    <div className="max-h-[650px] h-full w-full">
       <div
         ref={editorRef}
         className="rounded-2xl max-h-full bg-muted text-white p-4 border overflow-auto"
