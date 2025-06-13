@@ -7,20 +7,20 @@
 ## 🖼️ Preview Screenshots
 
 ### 🧭 Landing Page – Dark Mode
-![Landing Page Dark](apps/web/public/landingpage-dark.jpg)
+![Landing Page Dark](https://github.com/user-attachments/assets/5295e6b0-a01a-4591-978e-ff48625ce103)
 
 ### 🧑‍💻 Join a Room Instantly
-![Join Room](apps/web/public/joinroom.jpg)
+![Join Room](https://github.com/user-attachments/assets/b41f7abb-b8a3-4631-aeba-2011573d0a0c)
 
 ### 📚 Awareness Indicators
 *See who’s editing and where in real-time.*
 ![Awareness](https://github.com/user-attachments/assets/e92b6770-e74d-43cb-830e-0e9666253abf)
 
 ### 🤖 Room + AI Chatbot Integration
-![Room and Bot](apps/web/public/roomandbot.jpg)
+![Room and Bot](https://github.com/user-attachments/assets/08526d03-8b62-4cbf-abf8-d6fb64abe550)
 
 ### ☀️ Landing Page – Light Mode
-![Landing Page Light](apps/web/public/landingpage-light.jpg)
+![Landing Page Light](https://github.com/user-attachments/assets/af2c797a-3d11-4cd0-afc8-0640ec25d191)
 
 ---
 
