@@ -14,7 +14,7 @@
 
 ### 📚 Awareness Indicators
 *See who’s editing and where in real-time.*
-![Awareness](apps/web/public/awareness.jpg)
+![Awareness](https://github.com/user-attachments/assets/e92b6770-e74d-43cb-830e-0e9666253abf)
 
 ### 🤖 Room + AI Chatbot Integration
 ![Room and Bot](apps/web/public/roomandbot.jpg)
